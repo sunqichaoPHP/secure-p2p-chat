@@ -1,5 +1,5 @@
 /**
- * 端到端加密 P2P 聊天 —— 前端核心
+ * 端到端加密点对点聊天 —— 前端核心
  *
  * 安全模型：
  *   1. ECDH（Curve25519）协商共享密钥
@@ -583,7 +583,7 @@ const Guest = {
       console.log('[访客 ICE]', pc.iceConnectionState);
       if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
         if (!this.connected) {
-          this.showError('无法建立 P2P 连接（网络限制或防火墙阻断）');
+          this.showError('无法建立点对点连接（网络限制或防火墙阻断）');
           this.cleanup();
         }
       }

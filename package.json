@@ -1,7 +1,7 @@
 {
   "name": "secure-p2p-chat",
   "version": "1.0.0",
-  "description": "端到端加密 P2P 一对一聊天系统",
+  "description": "端到端加密点对点一对一聊天系统",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
