@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔒 加密聊天</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- ==================== 发起人视图 ==================== -->
+  <div id="host-view" class="view hidden">
+
+    <!-- 顶部栏 -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="logo">🔒 加密聊天</span>
+        <span id="host-status" class="status-badge offline">未开启</span>
+      </div>
+      <div class="topbar-right">
+        <button id="toggle-service-btn" class="btn-primary">开启服务</button>
+      </div>
+    </header>
+
+    <!-- 分享链接区 -->
+    <div id="share-section" class="share-section hidden">
+      <div class="share-header">
+        <span class="share-icon">🔗</span>
+        <span>分享此链接给想要聊天的人</span>
+      </div>
+      <div class="share-input-row">
+        <input id="share-link-input" type="text" readonly class="input share-input">
+        <button id="copy-link-btn" class="btn-secondary">复制</button>
+      </div>
+      <p class="share-hint">谁打开这个链接，谁就能和你建立加密聊天</p>
+    </div>
+
+    <!-- 主内容区 -->
+    <div id="host-main" class="host-main hidden">
+      <!-- 访客列表（标签切换） -->
+      <div class="guest-tabs" id="guest-tabs"></div>
+
+      <!-- 聊天区 -->
+      <div class="chat-area" id="host-chat-area">
+        <div class="chat-placeholder">
+          <div class="placeholder-icon">💬</div>
+          <p>等待访客接入…</p>
+          <p class="placeholder-sub">分享链接后，访客打开即可建立加密通道</p>
+        </div>
+      </div>
+
+      <!-- 输入区 -->
+      <div class="input-area hidden" id="host-input-area">
+        <textarea id="host-msg-input" class="msg-input" placeholder="输入消息…" rows="1"></textarea>
+        <button id="host-send-btn" class="btn-send">发送</button>
+      </div>
+
+      <!-- 加密状态指示 -->
+      <div class="encryption-indicator" id="host-enc-indicator">
+        <span class="lock-icon">🔓</span>
+        <span>等待加密通道建立…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 访客视图 ==================== -->
+  <div id="guest-view" class="view hidden">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="logo">🔒 加密聊天</span>
+        <span id="guest-status" class="status-badge connecting">连接中…</span>
+      </div>
+      <div class="topbar-right">
+        <span id="guest-peer-name" class="peer-name"></span>
+      </div>
+    </header>
+
+    <!-- 加入前：设置昵称 -->
+    <div id="guest-join-panel" class="join-panel">
+      <div class="join-card">
+        <div class="join-icon">🔐</div>
+        <h2>加入加密聊天</h2>
+        <p class="join-desc">链接已验证，设置你的昵称后即可开始加密对话</p>
+        <input id="guest-nickname-input" type="text" class="input" placeholder="输入你的昵称…" maxlength="20">
+        <button id="guest-join-btn" class="btn-primary">加入加密通道</button>
+        <p class="join-hint">你的消息将端到端加密，任何第三方无法解密</p>
+      </div>
+    </div>
+
+    <!-- 聊天主界面 -->
+    <div id="guest-chat-panel" class="chat-panel hidden">
+      <div class="chat-area" id="guest-chat-area">
+        <div class="chat-placeholder">
+          <div class="placeholder-icon">🔒</div>
+          <p>正在建立加密通道…</p>
+        </div>
+      </div>
+
+      <div class="input-area hidden" id="guest-input-area">
+        <textarea id="guest-msg-input" class="msg-input" placeholder="输入消息…" rows="1"></textarea>
+        <button id="guest-send-btn" class="btn-send">发送</button>
+      </div>
+
+      <div class="encryption-indicator" id="guest-enc-indicator">
+        <span class="lock-icon">🔓</span>
+        <span>等待加密通道建立…</span>
+      </div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="guest-error-panel" class="join-panel hidden">
+      <div class="join-card error-card">
+        <div class="join-icon">⚠️</div>
+        <h2>无法加入</h2>
+        <p id="guest-error-msg">链接无效或聊天服务已关闭</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ==================== 外部依赖（CDN） ==================== -->
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+
+  <!-- 应用脚本 -->
+  <script src="/app.js"></script>
+</body>
+</html>
